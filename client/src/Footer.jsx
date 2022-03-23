@@ -11,7 +11,7 @@ export const Footer = () => {
     return (
         <footer className='bg-dark text-light py-3' style={footerStyle}>
             <div className="text-center p-3 bg-dark" >
-                    © 2020 Copyright:
+                    © 2022 Copyright: 
         <a className="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
         </div>
         </footer>
