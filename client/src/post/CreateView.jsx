@@ -81,7 +81,7 @@ const CreateView = () => {
 
     const savePost = async () => {
         await createPost(post);
-        navigate('/');
+        navigate('/User');
     }
 
     const handleChange = (e) => {

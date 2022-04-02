@@ -18,6 +18,7 @@ import {
     TablePagination,
     TableFooter
  } from '@material-ui/core';
+import UpdateView from '../post/UpdateView';
 
 const useStyles = makeStyles((theme) => ({
     table: {

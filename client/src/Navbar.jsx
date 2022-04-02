@@ -50,7 +50,9 @@ const Navbar = () => {
                     </li>
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
-                    <button type="button" className="btn btn-light  btn-lg">Sign In</button>
+                    <Link to='/Login'>
+                    <button type="button" className="btn btn-light  btn-lg" >Log In</button>
+                    </Link>
                 </form>
                 </div>
             </nav>

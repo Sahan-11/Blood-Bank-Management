@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { getAllPosts } from '../service/api';
-import { useState, useEffect  } from 'react';
+import { getAllPosts, deletePost} from '../service/api';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useParams, useNavigate} from 'react-router-dom';
 
 import { 
     Table,
@@ -51,10 +52,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block'
     }
   }));
-
   const Posts=() =>{
     const [posts, setPosts] = useState([]);
+    const { id } = useParams();
     const classes = useStyles();
+    const history = useNavigate();
       const [page, setPage] = React.useState(0);
       const [rowsPerPage, setRowsPerPage] = React.useState(5);
     
@@ -68,12 +70,20 @@ const useStyles = makeStyles((theme) => ({
       };
     useEffect(() => {
         const fetchData = async () => {
-            let data = await getAllPosts();
-            console.log(data);
+            let data = await getAllPosts(id);
+            // console.log(data);
             setPosts(data);
         }
         fetchData();
     }, [])
+
+    const deleteBlog = async (id) => {    
+      
+      await deletePost(id);
+      history('/');
+      console.log("check");
+    }
+
     return(
       <Grid container item xs={12} sm={12} lg={12} >
    
@@ -122,19 +132,25 @@ const useStyles = makeStyles((theme) => ({
               <Grid container>
                   <Grid item lg={6}>
                   <Typography 
+                  
                     className={classes.status}
                     style={{
                         backgroundColor: 'green'
                   }}
-                  >Edit</Typography>
+                  >
+                    <Link to={`/update/${row._id}`}  style={{ color: 'inherit', textDecoration: 'inherit'}}>Edit</Link>
+                   
+                    </Typography>
                   </Grid>
                   <Grid item lg={6}>
                   <Typography 
                     className={classes.status}
+                    // onClick={()=>{console.log("Hi");}}
                     style={{
                         backgroundColor: 'red'
-                  }}
-                  >Delete</Typography>
+                  }}>
+                  <Link to={`/Home`}  onClick={()=>deleteBlog(row._id)} style={{ color: 'inherit', textDecoration: 'inherit'}}>Delete</Link>
+                  </Typography>
                   </Grid>
               </Grid>
  
