@@ -35,7 +35,7 @@ export const updatePost = async (request, response) => {
     }
 }
 export const deletePost = async (request, response) => {
-    console.log("check");
+    // console.log("check");
     try {
         const post = await Post.findById(request.params.id);
         

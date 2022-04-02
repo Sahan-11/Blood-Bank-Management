@@ -34,7 +34,10 @@ function App() {
                 {user && <Route exact path="/create" element={<CreateView/>}/>}
                 {user && <Route exact path="/update/:id" element={<UpdateView/>}/>}
                 <Route exact path="/Lookingforblood" element={<Navigate replace to = "/Login" />} />
-
+                <Route exact path="/User" element={<Navigate replace to = "/Login" />} />
+                <Route exact path="/BloodRequests" element={<Navigate replace to = "/Login" />} />
+                <Route exact path="/Donations" element={<Navigate replace to = "/Login" />} />
+                <Route exact path="/create" element={<Navigate replace to = "/Login" />} />
                 {/* <Route exact path="/" element={<Navigate replace to = "/Login" />} /> */}
               </Routes>
             </Box>

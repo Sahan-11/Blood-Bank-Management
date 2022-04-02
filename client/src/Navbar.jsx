@@ -15,6 +15,19 @@ const useStyle = makeStyles({
 
 const Navbar = () => {
     const classes = useStyle();
+    const user = localStorage.getItem("token");
+    const handleLogout = () => {
+        if(user){
+		localStorage.removeItem("token");
+		window.location="/";
+        }
+	}
+    const handleText = () => {
+        if(user){
+            return "Log Out"
+        }
+        return "Log In "
+    }
     return(
         <>
             <nav className="navbar navbar-expand-lg navbar-light bg-danger ">
@@ -51,7 +64,7 @@ const Navbar = () => {
                 </ul>
                 <form className="form-inline my-2 my-lg-0">
                     <Link to='/Login'>
-                    <button type="button" className="btn btn-light  btn-lg" >Log In</button>
+                    <button type="button" className="btn btn-light  btn-lg" onClick={handleLogout}>{user ? 'Log Out' : 'Log In'}</button>
                     </Link>
                 </form>
                 </div>

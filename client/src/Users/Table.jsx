@@ -80,7 +80,9 @@ const useStyles = makeStyles((theme) => ({
     const deleteBlog = async (id) => {    
       
       await deletePost(id);
-      history('/');
+		  window.location.reload();
+      window.alert("User deleted");
+      //history('/');
       console.log("check");
     }
 
@@ -149,7 +151,7 @@ const useStyles = makeStyles((theme) => ({
                     style={{
                         backgroundColor: 'red'
                   }}>
-                  <Link to={`/Home`}  onClick={()=>deleteBlog(row._id)} style={{ color: 'inherit', textDecoration: 'inherit'}}>Delete</Link>
+                  <Link to={`/User`}  onClick={()=>deleteBlog(row._id)} style={{ color: 'inherit', textDecoration: 'inherit'}}>Delete</Link>
                   </Typography>
                   </Grid>
               </Grid>
