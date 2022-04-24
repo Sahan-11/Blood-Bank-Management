@@ -104,8 +104,8 @@ const useStyles = makeStyles((theme) => ({
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>User Info</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Age</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Blood Group</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Disease</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Location</TableCell>
+            {/* <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Disease</TableCell> */}
+            <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Address</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -118,18 +118,18 @@ const useStyles = makeStyles((theme) => ({
                           <Avatar alt={row.NAME} src={row.Imageurl} className={classes.avatar}/>
                       </Grid>
                       <Grid item lg={9}>
-                          <Typography className={classes.name}>Name: {row.NAME}</Typography>
-                          <Typography color="textSecondary" variant="body2">Email Id: {row.EmailId}</Typography>
-                          <Typography color="textSecondary" variant="body2">Phone: {row.PHONE}</Typography>
+                          <Typography className={classes.name}>Name: {row.name}</Typography>
+                          <Typography color="textSecondary" variant="body2">Email Id: {row.email}</Typography>
+                          <Typography color="textSecondary" variant="body2">Phone: {row.phone}</Typography>
                       </Grid>
                   </Grid>
                 </TableCell>
               <TableCell>
-                  <Typography color="primary" variant="subtitle2" style={{textAlign: "center"}}>{row.AGE}</Typography>
+                  <Typography color="primary" variant="subtitle2" style={{textAlign: "center"}}>{row.age}</Typography>
               </TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.BLOODGROUP}</TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.DISEASE}</TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.LOCATION}</TableCell>
+              <TableCell style={{textAlign: "center"}}>{row.bloodgroup}</TableCell>
+              {/* <TableCell style={{textAlign: "center"}}>{row.disease}</TableCell> */}
+              <TableCell style={{textAlign: "center"}}>{row.location}</TableCell>
               <TableCell>
               <Grid container>
                   <Grid item lg={6}>

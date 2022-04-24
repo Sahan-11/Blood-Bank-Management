@@ -18,13 +18,10 @@ const categories = [
         name: "Blood Requests",
         url: "BloodRequests"
     },
+   
     {
-        name: "Stock Inquiry",
-        url: "StockInquiry"
-    },
-    {
-        name: "History",
-        url: "History"
+        name: "Blood Banks",
+        url: "BloodBanks"
     },
     
     
@@ -40,6 +37,14 @@ const useStyle = makeStyles({
         background: '#0925A6',
         // background: theme.palette.primary.dark,
         color: '#fff',
+        textDecoration: 'none'
+    },
+    btn: {
+        margin: 10,
+        width: '85%',
+        background: '#00BFFF',
+        // background: theme.palette.primary.dark,
+        color: 'black',
         textDecoration: 'none'
     },
     link: {
@@ -77,6 +82,13 @@ const Categories = ({ match }) => {
                     }
                 </TableBody>
             </Table>
+            <br/>
+            <Link to='/Donate' className={classes.link}> 
+                <Button variant="contained-primary" className={classes.btn} >Donate Blood</Button>
+            </Link>
+            <Link to='/Request' className={classes.link}> 
+                <Button variant="contained" className={classes.btn} >Request Blood</Button>
+            </Link>
         </>
     )
 }

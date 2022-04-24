@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import { getAllPosts } from '../service/api';
-import { useState, useEffect  } from 'react';
+import { getAllDonors, deletePost} from '../service/api';
+import { useState, useEffect, useContext } from 'react';
+import { Link, useParams, useNavigate} from 'react-router-dom';
 
 import { 
     Table,
@@ -18,6 +19,7 @@ import {
     TablePagination,
     TableFooter
  } from '@material-ui/core';
+// import post from '../../../server/schema/post-schema';
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -52,23 +54,25 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-let USERS = [], STATUSES = ['Approved', 'Pending', 'Rejected'];
-for(let i=0;i<14;i++) {
-    USERS[i] = {
-        name: "Shreyash",
-        email: "shreyash@gmail.com",
-        phone: "8431445678",
-        age: 21,
-        disease: "NIL",
-        bloodGroup: "A+",
-        units: 18,
-        location: "Apollo BloodBank, Pune",
-        date: "19 March 2022",
-        status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
-    }
-}
+let row = [], STATUSES = ['Approved', 'Pending', 'Rejected'];
+// for(let i=0;i<14;i++) {
+//     row[i] = {
+//         name: "Shreyash",
+//         email: "shreyash@gmail.com",
+//         phone: "8431445678",
+//         age: 21,
+//         disease: "NIL",
+//         bloodGroup: "A+",
+//         units: 18,
+//         location: "Apollo BloodBank, Pune",
+//         date: "19 March 2022",
+//         status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
+//     }
+// }
 
-function MTable() {
+const MTable = () => {
+  const [posts, setPosts] = useState([]);
+  const { id } = useParams();
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -76,12 +80,27 @@ function MTable() {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
-
+  let status = 'Pending';
+  
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
+      useEffect(() => {
+        // console.log(id);
+        const fetchData = async () => {
+            let data = await getAllDonors(id);
+            console.log(data);
+            setPosts(data);
+        }
+        fetchData();
+    }, [])
+    let ct=0;
+    posts.map((row) => {
+      if(row.request_units === 0) ct  = ct + 1;
+    })
+    
   return (
     <Grid container item xs={12} sm={12} lg={12} >
    
@@ -96,7 +115,7 @@ function MTable() {
         <col width="20%" />
         <col width="15%" />
         <col width="5%" />
-        <col width="15%" />
+        {/* <col width="15%" /> */}
       </colgroup>
         <TableHead>
           <TableRow>
@@ -108,16 +127,26 @@ function MTable() {
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Location</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Date</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Status</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell>
+            {/* <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell> */}
           </TableRow>
         </TableHead>
         <TableBody>
-          {USERS.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-            <TableRow key={row.name}>
+        {posts.map((row) => {
+            if(row.request_units === 0) ct  = ct + 1;
+            // {console.log(rowsPerPage)}
+            // let date = (row.createdDate).toDateString();
+            if(row.status === 1){
+              status = 'Approved'
+            }
+            else if(row.status === -1){
+              status = 'Rejected'
+            }
+            if(row.request_units === 0)
+            return <TableRow key={row.name}>
               <TableCell>
                   <Grid container>
                       <Grid item lg={4}>
-                          <Avatar alt={row.name} src='.' className={classes.avatar}/>
+                          <Avatar alt={row.name} src={row.Imageurl} className={classes.avatar}/>
                       </Grid>
                       <Grid item lg={8}>
                           <Typography className={classes.name}>Name: {row.name}</Typography>
@@ -129,23 +158,23 @@ function MTable() {
               <TableCell>
                   <Typography color="primary" variant="subtitle2" style={{textAlign: "center"}}>{row.age}</Typography>
               </TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.bloodGroup}</TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.units}</TableCell>
+              <TableCell style={{textAlign: "center"}}>{row.bloodgroup}</TableCell>
+              <TableCell style={{textAlign: "center"}}>{row.donate_units}</TableCell>
               <TableCell style={{textAlign: "center"}}>{row.disease}</TableCell>
               <TableCell style={{textAlign: "center"}}>{row.location}</TableCell>
-              <TableCell style={{textAlign: "center"}}>{row.date}</TableCell>
+              <TableCell style={{textAlign: "center"}}>{new Date(row.createdDate).toDateString()}</TableCell>
               <TableCell>
                   <Typography 
                     className={classes.status}
                     style={{
                         backgroundColor: 
-                        ((row.status === 'Approved' && 'green') ||
-                        (row.status === 'Pending' && 'blue') ||
-                        (row.status === 'Rejected' && 'red'))
+                        ((status === 'Approved' && 'green') ||
+                        (status === 'Pending' && 'blue') ||
+                        (status === 'Rejected' && 'red'))
                     }}
-                  >{row.status}</Typography>
+                  >{status}</Typography>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <Grid container>
                       
                     <Grid item lg={7}>
@@ -166,22 +195,23 @@ function MTable() {
                     </Grid>
                  </Grid>
  
-                 </TableCell>
+                 </TableCell> */}
             </TableRow>
-          ))}
+          })}
         </TableBody>
-        <TableFooter>
+        {/* <TableFooter>
         <TablePagination 
             rowsPerPageOptions={[5, 10, 15]}
             component="Table"
             colSpan={20} 
-            count={USERS.length}
+            // count={posts.length}
+            count={ct}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
         />
-        </TableFooter>
+        </TableFooter> */}
       </Table>
     </TableContainer>
     </Grid>

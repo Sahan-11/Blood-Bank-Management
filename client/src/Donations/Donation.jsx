@@ -3,8 +3,6 @@ import Categories from "../Categories";
 import MTable from "./Table";
 
 
-
-
 const useStyles = makeStyles({
     
     text: {
@@ -28,6 +26,7 @@ const useStyles = makeStyles({
   
   const Donation = () => {
     const classes = useStyles();
+    
     return (
         
       <Box className="classes.container" style={{ marginBottom: 50 }}>

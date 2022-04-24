@@ -4,7 +4,14 @@ const URL = 'http://localhost:8000';
 
 export const createPost = async (post) => {
     try {
-        return await axios.post(`${URL}/create`, post);
+        return await axios.post(`${URL}/Donate`, post);
+    } catch (error) {
+        console.log('Error while calling createPost API ', error);
+    }
+}
+export const createPosts = async (post) => {
+    try {
+        return await axios.post(`${URL}/Request`, post);
     } catch (error) {
         console.log('Error while calling createPost API ', error);
     }
@@ -33,5 +40,14 @@ export const deletePost = async (id) => {
         return await axios.delete(`${URL}/delete/${id}`);
     } catch(error) {
         console.log('Error while calling deletePost API ', error)
+    }
+}
+
+export const getAllDonors = async () => {
+    try {
+        let response = await axios.get(`${URL}/data`);
+        return response.data;
+    } catch (error) {
+        console.log('Error while calling donate API ', error);
     }
 }

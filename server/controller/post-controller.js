@@ -1,4 +1,5 @@
 import Post from '../schema/post-schema.js';
+
 import {User, validate} from '../schema/user-schema.js';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
@@ -23,9 +24,21 @@ export const createPost = async (request, response) =>  {
         response.status(500).json(error);
     }
 }
+export const createPosts = async (request, response) =>  {
+    console.log(request.body);
+
+    try {
+        const post = await new Post(request.body);
+        post.save();
+
+        response.status(200).json('blog saved successfully');
+    } catch(error) {
+        response.status(500).json(error);
+    }
+}
 export const updatePost = async (request, response) => {
     try {
-        const post = await Post.findById(request.params.id);
+        const post = await User.findById(request.params.id);
         
         await Post.findByIdAndUpdate( request.params.id, { $set: request.body })
 
@@ -37,7 +50,7 @@ export const updatePost = async (request, response) => {
 export const deletePost = async (request, response) => {
     // console.log("check");
     try {
-        const post = await Post.findById(request.params.id);
+        const post = await User.findById(request.params.id);
         
         await post.delete()
 
@@ -47,7 +60,17 @@ export const deletePost = async (request, response) => {
     }
 }
 
+
 export const getAllPosts = async (request, response) =>  {
+    try {
+        let posts = await User.find({});
+        response.status(200).json(posts);
+    } catch(error) {
+        response.status(500).json(error);
+    }
+}
+
+export const getAllDonors = async (request, response) =>  {
     try {
         let posts = await Post.find({});
         response.status(200).json(posts);
@@ -58,7 +81,7 @@ export const getAllPosts = async (request, response) =>  {
 
 export const getPost = async (request, response) => {
     try {
-        const post = await Post.findById(request.params.id);
+        const post = await User.findById(request.params.id);
         console.log(request.params.id);
         response.status(200).json(post);
     } catch (error) {
@@ -67,7 +90,6 @@ export const getPost = async (request, response) => {
 }
 
 export const Signup = async (req, res) => {
-
 	try {
 		const { error } = validate(req.body);
 		if (error)
@@ -95,7 +117,7 @@ export const Login = async (req, res) => {
 	try {
        
 		const user = await User.findOne({ email: req.body.email });
-        // console.log(user)
+        console.log(user)
         
 		if (!user)
 			return res.status(401).send({ message: "Invalid Email Id" });
@@ -110,7 +132,7 @@ export const Login = async (req, res) => {
 
 		const token = user.generateAuthToken();
 
-		res.status(200).send({ data: token, message: "Logged in successfully" });
+		res.status(200).send({ data: user, message: "Logged in successfully" });
 	} catch (error) {
         console.log(error);
 

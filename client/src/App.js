@@ -13,6 +13,9 @@ import Request from './Request/Requests';
 import UpdateView from './post/UpdateView';
 import Login from './Login/login';
 import Signup from './SignUp/signup';
+import Donate from './Donations/Donate';
+import RequestBlood from './Request/ReqBlood';
+import AdminDetails from './SignUp/adminsignup';
 
 function App() {
   const user = localStorage.getItem("token")
@@ -27,12 +30,15 @@ function App() {
                 <Route exact path="/About" element={<About/>}/>
                 <Route exact path="/Login" element={<Login/>}/>
                 <Route exact path="/Signup" element={<Signup/>}/>
+                <Route exact path="/AdminDetails" element={<AdminDetails/>}/>
                 {user && <Route exact path="/Lookingforblood" element={<BloodGroup/>}/>}
                 {user && <Route exact path="/Donations" element={<Donation/>}/>}
                 {user && <Route exact path="/BloodRequests" element={<Request/>}/>}
                 {user && <Route exact path="/User" element={<User/>}/>}
                 {user && <Route exact path="/create" element={<CreateView/>}/>}
                 {user && <Route exact path="/update/:id" element={<UpdateView/>}/>}
+                {user && <Route exact path="/Donate" element={<Donate/>}/>}
+                {user && <Route exact path="/Request" element={<RequestBlood/>}/>}
                 <Route exact path="/Lookingforblood" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/User" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/BloodRequests" element={<Navigate replace to = "/Login" />} />

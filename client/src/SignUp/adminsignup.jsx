@@ -1,8 +1,7 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography} from '@material-ui/core';
 import { useState } from "react";
 import axios from "axios";
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
     login_container: {
@@ -56,7 +55,7 @@ const useStyles = makeStyles({
         padding: 15,
         margin: '5px 0',
         fontSize: '14px',
-        backgroundColor: '#f34646',
+        backgroundColor: 'red',
         color: 'white',
         borderRadius: 5,
         textAlign: 'center'
@@ -110,9 +109,15 @@ const useStyles = makeStyles({
 })
 
 
-const Login = () => {
-    const [data, setData] = useState({ email: "", password: "" });
+const AdminDetails = () => {
+    
+    const [data, setData] = useState({
+		name: "",
+		email: "",
+		password: "",
+	});
 	const [error, setError] = useState("");
+	const navigate = useNavigate();
 
 	const handleChange = ({ currentTarget: input }) => {
 		setData({ ...data, [input.name]: input.value });
@@ -121,10 +126,11 @@ const Login = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8000/Login";
+            
+			const url = "http://localhost:8000/Signup";
 			const { data: res } = await axios.post(url, data);
-			localStorage.setItem("token", JSON.stringify(res.data));
-			window.location = "/";
+			navigate("/login");
+			console.log(res.message);
 		} catch (error) {
 			if (
 				error.response &&
@@ -136,13 +142,23 @@ const Login = () => {
 		}
 	};
 
-    const classes = useStyles();
+	const classes = useStyles();
     return (
 		<div className={classes.login_container}>
 			<div className={classes.login_form_container}>
 				<div className={classes.left}>
 					<form className={classes.form_container} onSubmit={handleSubmit}>
-						<h1 style={{fontSize: 40, marginTop: 0, marginBottom: 50}}>Log In </h1>
+						<h1 style={{fontSize: 40, marginTop: 0, marginBottom: 50}}>Create New Account </h1>
+                        <input
+							type="text"
+							placeholder="Name"
+							name="name"
+							onChange={handleChange}
+							value={data.name}
+							required
+							className={classes.input}
+                            style={{marginBottom: 20}}
+						/>
 						<input
 							type="email"
 							placeholder="Email"
@@ -164,16 +180,27 @@ const Login = () => {
 							className={classes.input}
                             style={{marginBottom: 20}}
 						/>
+                        {/* <input
+							type="password"
+							placeholder="Confirm Password"
+							name="confirm password"
+							// onChange={handleChange}
+							// value={data.password}
+							// required
+							className={classes.input}
+                            style={{marginBottom: 20}}
+						/> */}
 						{error && <div className={classes.error_msg}>{error}</div>}
-						<button type="submit" className={classes.btn}>
-							Log In
-						</button>
+                        <button type="submit" className={classes.btn}>
+                                Create Account
+                        </button>
+                        {/* <Link to='/Userdetails' className={classes.link}> 
+                            <button type="submit" className={classes.btn}>
+                                Create Account
+                            </button>
+                        </Link> */}
                         <br/>
-                        <Typography style={{fontSize: 20, fontWeight: 'bold', marginTop: 0, marginBottom: 20}}>Don't have an account? <Link to="/Signup">
-						<button type="button" className={classes.btn}>
-							Sign Up
-						</button>
-					    </Link></Typography>
+                        
 					</form>
                     
                     
@@ -184,4 +211,4 @@ const Login = () => {
 	);
 };
 
-export default Login;
+export default AdminDetails;

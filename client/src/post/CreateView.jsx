@@ -20,9 +20,10 @@ const useStyle = makeStyles(theme => ({
     },
     title: {
         marginTop: 10,
-        display: 'flex',
-        flexDirection: 'row',
-        float : "right"
+        paddingBottom: 10,
+        textAlign: 'center'
+        // display: 'flex',
+        // flexDirection: 'row',
     },
     textfield: {
         flex: 1,
@@ -90,6 +91,7 @@ const CreateView = () => {
 
     return (
         <Box className={classes.container}>
+            <h1 className={classes.title}>Create New User</h1>
             <img src={url} alt="post" className={classes.image} />
             
             <TextField id="standard-basic" label="Name" variant="outlined" 
