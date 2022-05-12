@@ -1,4 +1,5 @@
 import Post from '../schema/post-schema.js';
+import bloodbank from '../schema/bloodbank-schema.js';
 
 import {User, validate} from '../schema/user-schema.js';
 import bcrypt from 'bcrypt';
@@ -47,6 +48,7 @@ export const updatePost = async (request, response) => {
         response.status(500).json(error);
     }
 }
+
 export const deletePost = async (request, response) => {
     // console.log("check");
     try {
@@ -64,6 +66,15 @@ export const deletePost = async (request, response) => {
 export const getAllPosts = async (request, response) =>  {
     try {
         let posts = await User.find({});
+        response.status(200).json(posts);
+    } catch(error) {
+        response.status(500).json(error);
+    }
+}
+
+export const getAllBloodbanks = async (request, response) =>  {
+    try {
+        let posts = await bloodbank.find({});
         response.status(200).json(posts);
     } catch(error) {
         response.status(500).json(error);

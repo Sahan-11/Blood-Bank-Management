@@ -59,9 +59,11 @@ const Categories = ({ match }) => {
     //let params = new URLSearchParams(location.search);
     return (
         <>
-        <Link to='/create' className={classes.link}> 
+        {/* <Link to='/create' className={classes.link}> 
             <Button variant="contained" className={classes.write} >New User</Button>
-        </Link>
+        </Link> */}
+        <br></br>
+        <br></br>
             
             <Table className={classes.table}>
                 <TableHead>

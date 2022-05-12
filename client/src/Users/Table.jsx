@@ -57,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     const { id } = useParams();
     const classes = useStyles();
     const history = useNavigate();
+    const user = JSON.parse(localStorage.getItem("token"))
+    const admin = user.admin ? user.admin : "False";
+    console.log(admin)
       const [page, setPage] = React.useState(0);
       const [rowsPerPage, setRowsPerPage] = React.useState(5);
     
@@ -106,7 +109,7 @@ const useStyles = makeStyles((theme) => ({
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Blood Group</TableCell>
             {/* <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Disease</TableCell> */}
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Address</TableCell>
-            <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell>
+            {admin==='true' && <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -130,9 +133,9 @@ const useStyles = makeStyles((theme) => ({
               <TableCell style={{textAlign: "center"}}>{row.bloodgroup}</TableCell>
               {/* <TableCell style={{textAlign: "center"}}>{row.disease}</TableCell> */}
               <TableCell style={{textAlign: "center"}}>{row.location}</TableCell>
-              <TableCell>
+              {admin === 'true'&& <TableCell>
               <Grid container>
-                  <Grid item lg={6}>
+                  {/* <Grid item lg={6}>
                   <Typography 
                   
                     className={classes.status}
@@ -143,13 +146,14 @@ const useStyles = makeStyles((theme) => ({
                     <Link to={`/update/${row._id}`}  style={{ color: 'inherit', textDecoration: 'inherit'}}>Edit</Link>
                    
                     </Typography>
-                  </Grid>
+                  </Grid> */}
                   <Grid item lg={6}>
                   <Typography 
                     className={classes.status}
                     // onClick={()=>{console.log("Hi");}}
                     style={{
-                        backgroundColor: 'red'
+                        backgroundColor: 'red',
+                      
                   }}>
                   <Link to={`/User`}  onClick={()=>deleteBlog(row._id)} style={{ color: 'inherit', textDecoration: 'inherit'}}>Delete</Link>
                   </Typography>
@@ -157,6 +161,7 @@ const useStyles = makeStyles((theme) => ({
               </Grid>
  
                 </TableCell>
+              }
             </TableRow>
           ))}
         </TableBody>

@@ -51,3 +51,13 @@ export const getAllDonors = async () => {
         console.log('Error while calling donate API ', error);
     }
 }
+
+
+export const getAllBloodbanks = async () => {
+    try {
+        let response = await axios.get(`${URL}/bldbank`);
+        return response.data;
+    } catch (error) {
+        console.log('Error while calling donate API ', error);
+    }
+}

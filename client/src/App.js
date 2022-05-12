@@ -16,6 +16,7 @@ import Signup from './SignUp/signup';
 import Donate from './Donations/Donate';
 import RequestBlood from './Request/ReqBlood';
 import AdminDetails from './SignUp/adminsignup';
+import Bloodbank from './BloodBank';
 
 function App() {
   const user = localStorage.getItem("token")
@@ -39,11 +40,14 @@ function App() {
                 {user && <Route exact path="/update/:id" element={<UpdateView/>}/>}
                 {user && <Route exact path="/Donate" element={<Donate/>}/>}
                 {user && <Route exact path="/Request" element={<RequestBlood/>}/>}
+                {user && <Route exact path="/BloodBanks" element={<Bloodbank/>}/>}
                 <Route exact path="/Lookingforblood" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/User" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/BloodRequests" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/Donations" element={<Navigate replace to = "/Login" />} />
                 <Route exact path="/create" element={<Navigate replace to = "/Login" />} />
+                <Route exact path="/Donate" element={<Navigate replace to = "/Login" />} />
+
                 {/* <Route exact path="/" element={<Navigate replace to = "/Login" />} /> */}
               </Routes>
             </Box>

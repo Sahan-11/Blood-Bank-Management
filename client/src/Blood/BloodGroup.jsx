@@ -1,6 +1,8 @@
 import { Box, makeStyles, Typography, Link, Grid } from "@material-ui/core";
 import Categories from "../Categories";
+import { useState, useEffect, useContext } from 'react';
 import Post from "./Post";
+import { getAllDonors } from "../service/api";
 
 const useStyles = makeStyles({
   banner: {
@@ -48,6 +50,27 @@ const useStyles = makeStyles({
 
 const BloodGroup = () => {
   const classes = useStyles();
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    // console.log(id);
+    const fetchData = async () => {
+        let data = await getAllDonors();
+        console.log(data);
+        setPosts(data);
+    }
+    fetchData();
+}, [])
+  let req=0;let don=0;let total=24000,acc=0;
+  posts.map((row) => {
+    if(row.donate_units === 0) req  = req + 1;
+    if(row.status===1 && row.donate_units === 0) acc  = acc + 1;
+    if(row.status ===1 && row.request_units === 0) don  = don + 1;
+    if(row.status ===1 && row.donate_units === 0) total  = total - row.request_units;
+    if(row.status ===1 && row.donate_units === 0) total  = total + row.donate_units;
+  })
+
+
+
   return (
     <Box className="classes.container" style={{ marginBottom: 50 }}>
       <Grid container>
@@ -70,7 +93,7 @@ const BloodGroup = () => {
                 />
               </Typography>
 
-              <Typography className={classes.detail}> 5</Typography>
+              <Typography className={classes.detail}> {req}</Typography>
             </Box>
           </Grid>
           <Grid item lg={3} sm={4} xs={12} >
@@ -86,7 +109,7 @@ const BloodGroup = () => {
                 />
               </Typography>
 
-              <Typography className={classes.detail}> 3</Typography>
+              <Typography className={classes.detail}> {acc}</Typography>
             </Box>
           </Grid>
           <Grid item lg={3} sm={4} xs={12} >
@@ -102,7 +125,7 @@ const BloodGroup = () => {
                 />
               </Typography>
 
-              <Typography className={classes.detail}> 10</Typography>
+              <Typography className={classes.detail}> {don}</Typography>
             </Box>
           </Grid>
           <Grid item lg={3} sm={4} xs={12} >
@@ -118,7 +141,7 @@ const BloodGroup = () => {
                 />
               </Typography>
 
-              <Typography className={classes.detail}> 105</Typography>
+              <Typography className={classes.detail}> {total}</Typography>
             </Box>
           </Grid>
         </Grid>

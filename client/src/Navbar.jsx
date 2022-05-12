@@ -54,7 +54,9 @@ const Navbar = () => {
                         <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item active">
-                        <a className="nav-link font-weight-bold" href="#">Want to Donate <span className="sr-only">(current)</span></a>
+                        <a className="nav-link font-weight-bold" href="#">
+                        <Link to='/Donate' style={{ color: 'inherit', textDecoration: 'inherit'}}>Want to Donate? </Link> 
+                            <span className="sr-only">(current)</span></a>
                     </li>
                     <li className="nav-item active">
                         <a className="nav-link font-weight-bold" href="#">

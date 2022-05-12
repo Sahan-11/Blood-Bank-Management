@@ -76,7 +76,8 @@ const MTable = () => {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
-
+  const user = JSON.parse(localStorage.getItem("token"))
+  const admin = user.admin ? user.admin : "False";
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -127,11 +128,12 @@ const MTable = () => {
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Location</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Date</TableCell>
             <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Status</TableCell>
-            {/* <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell> */}
+            {admin === 'true' && <TableCell className={classes.tableHeaderCell} style={{textAlign: "center"}}>Action</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
         {posts.map((row) => {
+            status='Pending'
             if(row.request_units === 0) ct  = ct + 1;
             // {console.log(rowsPerPage)}
             // let date = (row.createdDate).toDateString();
@@ -174,28 +176,55 @@ const MTable = () => {
                     }}
                   >{status}</Typography>
                 </TableCell>
-                {/* <TableCell>
-                  <Grid container>
+                {admin=== 'true' && <TableCell>
+                {status === 'Pending' && <Grid container>
                       
-                    <Grid item lg={7}>
-                    <Typography 
-                        className={classes.status}
-                        style={{
-                            backgroundColor: 'green'
-                    }}
-                    >Approve</Typography>
-                    </Grid>
-                    <Grid item lg={5}>
-                    <Typography 
-                        className={classes.status}
-                        style={{
-                            backgroundColor: 'red'
-                    }}
-                    >Reject</Typography>
-                    </Grid>
-                 </Grid>
+                      <Grid item lg={7}>
+                       <Typography 
+                        onClick={()=>{window.location.reload();}}
+                           className={classes.status}
+                           style={{
+                               backgroundColor: 'green'
+                       }}
+                       >
+                         <Link to={`/Donations`} style={{ color: 'inherit', textDecoration: 'inherit'}}>Approve</Link></Typography>
+                       </Grid>
+                       <Grid item lg={5}>
+                       <Typography 
+                       onClick={()=>{window.location.reload();}}
+                           className={classes.status}
+                           style={{
+                               backgroundColor: 'red'
+                       }}
+                       >
+                         <Link to={`/Donations`} style={{ color: 'inherit', textDecoration: 'inherit'}}>Reject</Link></Typography>
+                       </Grid>
+                    </Grid> }
+                    {status === 'Approved' && <Grid container style = {{textAlign: "center"}}>
+                      
+                      <Grid item lg={12}>
+                       <Typography 
+                           className={classes.status}
+                           style={{
+                               backgroundColor: 'green'
+                       }}
+                       >Approved</Typography>
+                       </Grid>
+                       
+                    </Grid> }
+                    {status === 'Rejected' && <Grid container style = {{textAlign: "center"}}>
+                      <Grid item lg={12}>
+                       <Typography 
+                           className={classes.status}
+                           style={{
+                               backgroundColor: 'red'
+                       }}
+                       >Rejected</Typography>
+                       </Grid>
+                       
+                    </Grid> }
  
-                 </TableCell> */}
+                 </TableCell> }
             </TableRow>
           })}
         </TableBody>
